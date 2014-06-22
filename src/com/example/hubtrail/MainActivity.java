@@ -2,17 +2,18 @@ package com.example.hubtrail;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.SpinnerAdapter;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends Activity implements
 		ActionBar.OnNavigationListener {
@@ -22,7 +23,11 @@ public class MainActivity extends Activity implements
 	 * current dropdown position.
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	
+	private GoogleMap mMap;
+	
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,19 +37,20 @@ public class MainActivity extends Activity implements
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
 		// Set up the dropdown list navigation in the action bar.
-		actionBar.setListNavigationCallbacks(
+		SpinnerAdapter spinnerAdapter = new ArrayAdapter<String>(actionBar.getThemedContext(), android.R.layout.simple_spinner_dropdown_item,android.R.id.text1, 
+				new String[] {
+					getString(R.string.title_section1),
+					getString(R.string.title_section2),
+					getString(R.string.title_section3),
+					getString(R.string.title_section4),
+					getString(R.string.title_section5),
+					getString(R.string.title_section6), });
+		
 		// Specify a SpinnerAdapter to populate the dropdown list.
-				new ArrayAdapter<String>(actionBar.getThemedContext(),
-						android.R.layout.simple_list_item_1,
-						android.R.id.text1, new String[] {
-								getString(R.string.title_section1),
-								getString(R.string.title_section2),
-								getString(R.string.title_section3),
-								getString(R.string.title_section4),
-								getString(R.string.title_section5),
-								getString(R.string.title_section6), }), this);
+		actionBar.setListNavigationCallbacks(spinnerAdapter, this);
+			
+				 
 	}
 
 	@Override
@@ -100,50 +106,63 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public boolean onNavigationItemSelected(int position, long id) {
-		// When the given dropdown item is selected, show its contents in the
-		// container view.
-		getFragmentManager()
-				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
+
+		setUpMapIfNeeded(position);
 		return true;
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		private static final String ARG_SECTION_NUMBER = "section_number";
+	private void setUpMapIfNeeded(int ID) {
+	    // Do a null check to confirm that we have not already instantiated the map.
+	    if (mMap == null) {
 
-		/**
-		 * Returns a new instance of this fragment for the given section number.
-		 */
-		public static PlaceholderFragment newInstance(int sectionNumber) {
-			PlaceholderFragment fragment = new PlaceholderFragment();
-			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-			fragment.setArguments(args);
-			return fragment;
-		}
+	        mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+	        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            
+        }
 
-		public PlaceholderFragment() {
-		}
+	     // Check if we were successful in obtaining the map.
+        if (mMap != null) {
+            // The Map is verified. It is now safe to manipulate the map.
+        	// Get a handle to the Map Fragment
+        	if (ID == 0) {
+        		LatLng city = new LatLng(46.523909, -84.315324);
+        		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 13));
+        	}
+            if (ID == 1){
+            	LatLng downtown = new LatLng(46.509408, -84.325066);
+   		 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(downtown, 14));
+   		 	
+    		}
+            if (ID == 2){
+            	LatLng eastend = new LatLng(46.512214, -84.278116);
+   		 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eastend, 15));
+   		 	
+    		}
+            if (ID == 3){
+            	LatLng westend = new LatLng(46.527216, -84.347897);
+   		 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(westend, 15));
+   		 	
+    		}
+            if (ID == 4){
+            	LatLng finhill = new LatLng(46.535297, -84.302882);
+   		 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(finhill, 15));
+   		 	
+    		}
+            if (ID == 5){
+            	LatLng fortcreek = new LatLng(46.545097, -84.332343);
+   		 		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fortcreek, 15));
+   		 	
+    		}
+            
+            
+            mMap.getUiSettings().setCompassEnabled(false);
+            mMap.getUiSettings().setRotateGesturesEnabled(false);
+            mMap.getUiSettings().setTiltGesturesEnabled(false);
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+            mMap.getUiSettings().setZoomGesturesEnabled(true);
+            mMap.setMyLocationEnabled(true);
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			TextView textView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			textView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return rootView;
-		}
+	    }
 	}
 
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 public class HelpActivity extends Activity {
 
 	@Override
@@ -21,7 +22,6 @@ public class HelpActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
 
 	}
 
@@ -63,5 +63,4 @@ public class HelpActivity extends Activity {
 			return rootView;
 		}
 	}
-
 }
