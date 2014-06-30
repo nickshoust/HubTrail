@@ -1,8 +1,12 @@
 package com.example.hubtrail;
 
+import java.util.HashMap;
+
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -11,6 +15,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -20,13 +26,39 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MainActivity extends Activity implements
 		ActionBar.OnNavigationListener {
+	
+	/**
+	   * Enum used to identify the tracker that needs to be used for tracking.
+	   *
+	   * A single tracker is usually enough for most purposes. In case you do need multiple trackers,
+	   * storing them all in Application object helps ensure that they are created only once per
+	   * application instance.
+	   */
+	  public enum TrackerName {
+	    APP_TRACKER, // Tracker used only in this app.
+	  }
 
+	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+	  
+	  synchronized Tracker getTracker(TrackerName trackerId) {
+	    if (!mTrackers.containsKey(trackerId)) {
+
+	      GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+	      //Tracker t = (trackerId == TrackerName.APP_TRACKER) analytics.newTracker(PROPERTY_ID);
+	      //mTrackers.put(trackerId, t);
+
+	    }
+	    return mTrackers.get(trackerId);
+	  }
+	  
+      //end GA code
+	  
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-	
+	public static final String PREFS_NAME = "MyPrefsFile";
 	private GoogleMap mMap;
 	
 
@@ -52,7 +84,7 @@ public class MainActivity extends Activity implements
 		
 		// Specify a SpinnerAdapter to populate the dropdown list.
 		actionBar.setListNavigationCallbacks(spinnerAdapter, this);
-			
+		
 				 
 	}
 
@@ -119,14 +151,27 @@ public class MainActivity extends Activity implements
 	    if (mMap == null) {
 
 	        mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-	        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
         }
-
+	    
 	     // Check if we were successful in obtaining the map.
         if (mMap != null) {
             // The Map is verified. It is now safe to manipulate the map.
         	// Get a handle to the Map Fragment
+        	boolean earthmode = false;
+        	SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+    	    if (settings.contains("earthview")){
+    	    	earthmode = settings.getBoolean("earthview", false);
+    	    }        		
+    	    
+    	    
+    	    if (earthmode){
+    	    	mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+    	    } else {
+    	    	mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+    	    }
+        	
+        	
         	PolylineOptions trailPath = new PolylineOptions()
 	    		.width(3)
 	    		.color(Color.RED)

@@ -2,27 +2,42 @@ package com.example.hubtrail;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 public class SettingsActivity extends Activity {
+	public static final String PREFS_NAME = "MyPrefsFile";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-
+		
+		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-	}
+		
+		CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_earthview);
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+	    if (settings.contains("earthview")){
+	    	checkBox.setChecked(settings.getBoolean("earthview", false));
+	    } 
+	    
+	    
 
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -60,6 +75,23 @@ public class SettingsActivity extends Activity {
 					container, false);
 			return rootView;
 		}
+	}
+
+	public void onCheckboxClicked(View view) {
+		CheckBox checkBox = (CheckBox)findViewById(R.id.checkbox_earthview);
+		boolean checked = checkBox.isChecked();
+
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+		Editor editor = settings.edit();
+		if (checked){
+			editor.putBoolean("earthview", true);
+		} else {
+			editor.putBoolean("earthview", false);
+		}
+		
+		editor.commit();
+
+	    
 	}
 
 }
