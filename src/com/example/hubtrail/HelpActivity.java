@@ -2,13 +2,20 @@ package com.example.hubtrail;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class HelpActivity extends Activity {
@@ -22,8 +29,46 @@ public class HelpActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-
+		 TextView textView = (TextView) findViewById(R.id.help);
+		 textView.setText (Html.fromHtml (getString (R.string.help)));
+		 Button startBtn = (Button) findViewById(R.id.sendEmail);
+	      startBtn.setOnClickListener(new View.OnClickListener() {
+	         public void onClick(View view) {
+	        	 sendEmail();
+	         }
+	      });
 	}
+	      protected void sendEmail() {
+	    	  Context context = getApplicationContext(); 
+	          String[] TO = {"hubtrail@nickshoust.com"};
+	          Intent emailIntent = new Intent(Intent.ACTION_SEND);
+	          emailIntent.setData(Uri.parse("mailto:"));
+	          emailIntent.setType("text/plain");
+
+	          emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+	          emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hub Trail Feedback");
+	          Context appcontext = getApplicationContext(); 
+	          PackageManager packageManager = appcontext.getPackageManager();
+	          String packageName = appcontext.getPackageName();
+
+	          String myVersionName = "not available"; 
+	          String androidVersion = android.os.Build.VERSION.RELEASE;
+	          
+	          try {
+	              myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
+	          } catch (PackageManager.NameNotFoundException e) {
+	              e.printStackTrace();
+	          }
+	          emailIntent.putExtra(Intent.EXTRA_TEXT, "Version: " + myVersionName + "\r\nAndroid version: " + androidVersion);
+
+	          try {
+	             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+	             finish();
+	          } catch (android.content.ActivityNotFoundException ex) {
+	             Toast.makeText(HelpActivity.this, 
+	             "There is no email client installed.", Toast.LENGTH_SHORT).show();
+	          }
+	       }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
