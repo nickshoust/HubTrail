@@ -14,6 +14,15 @@
         android:text="@string/earthview"
         android:checked="false"
         android:onClick="onCheckboxClicked"/>
-        
+
+  <CheckBox
+      android:id="@+id/checkbox_mylocation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@+id/checkbox_earthview"
+      android:layout_below="@+id/checkbox_earthview"
+      android:checked="true"
+      android:onClick="onCheckboxClicked"
+      android:text="@string/mylocation" />
 
 </RelativeLayout>

@@ -13,9 +13,37 @@
     <string name="action_help">Help</string>
     <string name="title_activity_help">Help</string>
     <string name="earthview">Enable Earth View</string>
-    <string name="title_help">
-
+    <string name="mylocation">Enable My Location</string>
+    <string name="help">
+		 <![CDATA[
+		 <p><b>Disclaimer</b>
+		 </p>
+		 
+		 <p>
+		 Hup Trail is to be used as general information only. The routes listed are to serve as a
+		 general guideline and may not be completely accurate.
+		 <p>
+		 Please follow all posted signs and guidelines.
+		 <p>
+		 No personal information of you, the user, will ever be collected.
+		 </p>
+		 <p>
+		 The John Rowswell Hub Trail and logo are properties of The City of Sault Ste. Marie.
+		 </p>
+		 
+		 <p><b>The John Rowswell Hub Trail</b>
+		 </p>
+		 <p>
+		 From cityssm.on.ca: &quot;The John Rowswell Hub Trail is a 25 km multi-use non-motorized trail system that connects many significant points of interest including the waterfront walkway, Bellevue Park, Algoma University, Sault College, the new hospital and Fort Creek Conservation Area. 
+		<p>
+		This trail system provides access to all areas of the City and links together key cultural, historical, and natural areas of the community. In addition, community residents can use the trail as an alternative, environmentally friendly mode of transportation, decreasing auto-dependency within the City. 
+		<p>
+		The Trail provides increased recreational opportunities for residents and visitors to Sault Ste. Marie and attract many trail-using tourists to the City. As well, the trail serves to promote local, provincial and national cross-country running and cycling trials and competitions.
+		<p>
+		One the main goals of the John Rowswell Hub Trail is to improve recreational and health opportunities in the community. Walking and cycling provide enjoyable, convenient and affordable means of exercise and recreation. The most effective fitness routines are moderate in intensity, individualized and are incorporated into our daily activities. Walking and cycling can accomplish this and at the same time provide mobility. &quot;
+		</p> ]]>
     </string>
+    <string name="compose_email">Send feedback</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_settings">Settings</string>
 

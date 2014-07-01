@@ -84,7 +84,6 @@ public class MainActivity extends Activity implements
 		
 		// Specify a SpinnerAdapter to populate the dropdown list.
 		actionBar.setListNavigationCallbacks(spinnerAdapter, this);
-		
 				 
 	}
 
@@ -95,6 +94,7 @@ public class MainActivity extends Activity implements
 			getActionBar().setSelectedNavigationItem(
 					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
 		}
+		
 	}
 
 	@Override
@@ -102,6 +102,7 @@ public class MainActivity extends Activity implements
 		// Serialize the current dropdown position.
 		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
 				.getSelectedNavigationIndex());
+		
 	}
 
 	@Override
@@ -159,10 +160,14 @@ public class MainActivity extends Activity implements
             // The Map is verified. It is now safe to manipulate the map.
         	// Get a handle to the Map Fragment
         	boolean earthmode = false;
+        	boolean mylocation = true;
         	SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     	    if (settings.contains("earthview")){
     	    	earthmode = settings.getBoolean("earthview", false);
-    	    }        		
+    	    }
+    	    if (settings.contains("mylocation")){
+    	    	mylocation = settings.getBoolean("mylocation", true);
+    	    } 
     	    
     	    
     	    if (earthmode){
@@ -170,7 +175,11 @@ public class MainActivity extends Activity implements
     	    } else {
     	    	mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
     	    }
-        	
+    	    if (mylocation){
+    	    	mMap.setMyLocationEnabled(true);
+    	    } else {
+    	    	mMap.setMyLocationEnabled(false);
+    	    }
         	
         	PolylineOptions trailPath = new PolylineOptions()
 	    		.width(3)
@@ -487,8 +496,7 @@ public class MainActivity extends Activity implements
             mMap.getUiSettings().setTiltGesturesEnabled(false);
             mMap.getUiSettings().setZoomControlsEnabled(false);
             mMap.getUiSettings().setZoomGesturesEnabled(true);
-            mMap.setMyLocationEnabled(true);
-
+            
 	    }
 	}
 

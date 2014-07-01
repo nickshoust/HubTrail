@@ -22,20 +22,25 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		
-		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_earthview);
+	}
+	
+	@Override
+    protected void onStart() {
+        super.onStart();
+        CheckBox checkBoxEarthView = (CheckBox)findViewById(R.id.checkbox_earthview);
+        CheckBox checkBoxMyLocation = (CheckBox)findViewById(R.id.checkbox_mylocation);
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 	    if (settings.contains("earthview")){
-	    	checkBox.setChecked(settings.getBoolean("earthview", false));
+	    	checkBoxEarthView.setChecked(settings.getBoolean("earthview", false));
 	    } 
-	    
-	    
-
+	    if (settings.contains("mylocation")){
+	    	checkBoxMyLocation.setChecked(settings.getBoolean("mylocation", true));
+	    } 
 	}
 	
 	@Override
@@ -78,15 +83,22 @@ public class SettingsActivity extends Activity {
 	}
 
 	public void onCheckboxClicked(View view) {
-		CheckBox checkBox = (CheckBox)findViewById(R.id.checkbox_earthview);
-		boolean checked = checkBox.isChecked();
+		CheckBox checkBoxEarthView = (CheckBox)findViewById(R.id.checkbox_earthview);
+		CheckBox checkBoxMyLocation = (CheckBox)findViewById(R.id.checkbox_mylocation);
+		boolean earthViewChecked = checkBoxEarthView.isChecked();
+		boolean myLocationChecked = checkBoxMyLocation.isChecked();
 
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 		Editor editor = settings.edit();
-		if (checked){
+		if (earthViewChecked){
 			editor.putBoolean("earthview", true);
 		} else {
 			editor.putBoolean("earthview", false);
+		}
+		if (myLocationChecked){
+			editor.putBoolean("mylocation", true);
+		} else {
+			editor.putBoolean("mylocation", false);
 		}
 		
 		editor.commit();
