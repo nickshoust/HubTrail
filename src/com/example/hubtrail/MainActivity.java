@@ -1,7 +1,5 @@
 package com.example.hubtrail;
 
-import java.util.HashMap;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -15,8 +13,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -26,32 +22,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MainActivity extends Activity implements
 		ActionBar.OnNavigationListener {
-	
-	/**
-	   * Enum used to identify the tracker that needs to be used for tracking.
-	   *
-	   * A single tracker is usually enough for most purposes. In case you do need multiple trackers,
-	   * storing them all in Application object helps ensure that they are created only once per
-	   * application instance.
-	   */
-	  public enum TrackerName {
-	    APP_TRACKER, // Tracker used only in this app.
-	  }
-
-	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
-	  
-	  synchronized Tracker getTracker(TrackerName trackerId) {
-	    if (!mTrackers.containsKey(trackerId)) {
-
-	      GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-	      //Tracker t = (trackerId == TrackerName.APP_TRACKER) analytics.newTracker(PROPERTY_ID);
-	      //mTrackers.put(trackerId, t);
-
-	    }
-	    return mTrackers.get(trackerId);
-	  }
-	  
-      //end GA code
 	  
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -84,9 +54,11 @@ public class MainActivity extends Activity implements
 		
 		// Specify a SpinnerAdapter to populate the dropdown list.
 		actionBar.setListNavigationCallbacks(spinnerAdapter, this);
-				 
+		
 	}
 
+
+	
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		// Restore the previously serialized current dropdown position.
