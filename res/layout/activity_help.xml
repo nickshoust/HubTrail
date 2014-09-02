@@ -8,7 +8,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.hubtrail.HelpActivity"
+    tools:context="com.nickshoust.hubtrail.HelpActivity"
     tools:ignore="MergeRootFrame"  >
 	
         <TextView 

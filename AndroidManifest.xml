@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hubtrail"
+    package="com.nickshoust.hubtrail"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.hubtrail.MainActivity"
+            android:name="com.nickshoust.hubtrail.MainActivity"
             android:label="@string/app_name" 
             android:launchMode="singleTop" >
             <intent-filter>
@@ -24,24 +24,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.hubtrail.HelpActivity"
+            android:name="com.nickshoust.hubtrail.HelpActivity"
             android:label="@string/title_activity_help"
-            android:parentActivityName="com.example.hubtrail.MainActivity" >
+            android:parentActivityName="com.nickshoust.hubtrail.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.hubtrail.MainActivity" />
+                android:value="com.nickshoust.hubtrail.MainActivity" />
         </activity>
         <activity
-            android:name="com.example.hubtrail.SettingsActivity"
+            android:name="com.nickshoust.hubtrail.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.example.hubtrail.MainActivity" >
+            android:parentActivityName="com.nickshoust.hubtrail.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.hubtrail.MainActivity" />
+                android:value="com.nickshoust.hubtrail.MainActivity" />
         </activity>
         <meta-data
     		android:name="com.google.android.maps.v2.API_KEY"
-   			android:value="AIzaSyAvIpzvgLYPjDevFGJ9qB338uTpo4rwyos"/>
+   			android:value="AIzaSyDhuR7meFkkcGUNDF8sSTvw6BpZnX4D_0A"/>
         <meta-data android:name="com.google.android.gms.version"
            android:value="@integer/google_play_services_version" />
     </application>

@@ -13,14 +13,15 @@
     <string name="action_help">Help</string>
     <string name="title_activity_help">Help</string>
     <string name="earthview">Enable Earth View</string>
-    <string name="mylocation">Enable My Location</string>
+    <string name="mylocation">Show My Location</string>
+    <string name="altRoute">Show Alternative Routes</string>
     <string name="help">
 		 <![CDATA[
 		 <p><b>Disclaimer</b>
 		 </p>
 		 
 		 <p>
-		 Hup Trail is to be used as general information only. The routes listed are to serve as a
+		 Hub Trail is to be used as general information only. The routes listed are to serve as a
 		 general guideline and may not be completely accurate.
 		 <p>
 		 Please follow all posted signs and guidelines.
